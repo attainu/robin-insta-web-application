@@ -6,11 +6,7 @@ const mongoose = require('mongoose')
 const PORT = 5000
 const {MONGOURI} = require('./key')
 
-//direct calling user modelschema
-require('./models/user')
 
-app.use(express.json())
-app.use(require('./routes/auth.js'))
 
 
 //connecting to database
@@ -22,6 +18,15 @@ mongoose.connection.on('connected',()=>{
 mongoose.connection.on('error',(err)=>{
     console.log("error showing",err)
 })
+
+//direct calling  modelschema
+require('./models/user')
+require('./models/post')
+
+
+app.use(express.json())
+app.use(require('./routes/auth.js'))
+app.use(require('./routes/post.js'))
 
 //server calling
 app.listen(PORT,()=>{

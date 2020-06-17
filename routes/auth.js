@@ -8,9 +8,9 @@ const {JWT_SECRET} = require('../key')
 const requireLogin = require('../middleware/requireLogin')
 
 
-router.get('/protected', (req,res)=>{
-  res.send("this routing is for only checking purpose")
-})
+// router.get('/protected',requireLogin, (req,res)=>{
+//   res.send("this routing is for only checking purpose")
+// })
 //making signup route and handling error
 router.post('/signup',(req,res)=>{
   const {name,email,password} = req.body 
