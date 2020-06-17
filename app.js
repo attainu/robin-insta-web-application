@@ -13,7 +13,6 @@ app.use(express.json())
 app.use(require('./routes/auth.js'))
 
 
-
 //connecting to database
 mongoose.connect(MONGOURI,{useNewUrlParser:true,useUnifiedTopology:true})
 
