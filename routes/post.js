@@ -4,7 +4,21 @@ const mongoose = require('mongoose')
 const requireLogin = require('../middleware/requireLogin')
 const Post = mongoose.model("Post")
 
+//making route for all the post
+router.get('/allpost',requireLogin,(req,res)=>{
+    Post.find()
+    .populate("postedBy","_id name")
+    .populate("comments.postedBy","_id name")
+    .sort('-createdAt')
+    .then((posts)=>{
+        res.json({posts})
+    }).catch(err=>{
+        console.log(err)
+    })
+    
+})
 
+//making create post router with user
 router.post('/createpost',requireLogin,(req,res)=>{
     const {title,body} = req.body
     if(!title || !body){
@@ -26,4 +40,18 @@ router.post('/createpost',requireLogin,(req,res)=>{
         console.log(err)
     })
 })
+
+//all the post created by that user
+router.get('/mypost',requireLogin,(req,res)=>{
+    Post.find({postedBy:req.user._id}) //quering by id who is loggedin
+    .populate("PostedBy","_id name")
+    .then(mypost=>{
+        res.json({mypost})
+    })
+    .catch(err=>{
+        console.log(err)
+    })
+})
+
+
 module.exports = router

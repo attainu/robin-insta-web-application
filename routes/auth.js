@@ -11,6 +11,7 @@ const requireLogin = require('../middleware/requireLogin')
 // router.get('/protected',requireLogin, (req,res)=>{
 //   res.send("this routing is for only checking purpose")
 // })
+
 //making signup route and handling error
 router.post('/signup',(req,res)=>{
   const {name,email,password} = req.body 
