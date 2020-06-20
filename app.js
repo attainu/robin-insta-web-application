@@ -3,7 +3,8 @@ const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
 
-const PORT = 5000
+const PORT = 3000
+
 const {MONGOURI} = require('./key')
 
 
