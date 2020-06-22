@@ -18,10 +18,12 @@ router.get('/allpost',requireLogin,(req,res)=>{
     
 })
 
-//making create post router with user
+//making post router with user
 router.post('/createpost',requireLogin,(req,res)=>{
-    const {title,body} = req.body
-    if(!title || !body){
+    const {title,body,pic} = req.body
+    //conole.log(title,body,pic)
+    
+    if(!title || !body || !pic){
       return  res.status(422).json({error:"require all fields"})
     }
     req.user.password = undefined
@@ -31,6 +33,7 @@ router.post('/createpost',requireLogin,(req,res)=>{
     const post = new Post({
         title,
         body,
+        photo:pic,
         postedBy:req.user
     })
     post.save().then(result=>{
@@ -50,6 +53,63 @@ router.get('/mypost',requireLogin,(req,res)=>{
     })
     .catch(err=>{
         console.log(err)
+    })
+})
+
+//making like router this is update request we can write put reuest post will also work
+router.put('/like',requireLogin,(req,res)=>{
+    Post.findByIdAndUpdate(req.body.postId,{
+        $push:{likes:req.user._id}
+    },{
+        new:true
+    }).exec((err,result)=>{
+        if(err){
+            return res.status(422).json({error:err})
+        }else{
+            res.json(result)
+        }
+    })
+})
+
+//making unlike router this is update request we can write put reuest post will also work
+router.put('/unlike',requireLogin,(req,res)=>{
+    Post.findByIdAndUpdate(req.body.postId,{
+        $pull:{likes:req.user._id}
+    },{
+        new:true
+    })
+    .populate("comments.postedBy","_id name")
+    .populate("postedBy","_id name")
+    .exec((err,result)=>{
+        if(err){
+            return res.status(422).json({error:err})
+        }else{
+            res.json(result)
+        }
+    })
+})
+
+
+//making route
+
+router.put('/comment',requireLogin,(req,res)=>{
+    const comment = {
+        text:req.body.text,
+        postedBy:req.user._id
+    }
+    Post.findByIdAndUpdate(req.body.postId,{
+        $push:{comments:comment}
+    },{
+        new:true
+    })
+    .populate("comments.postedBy","_id name")
+    .populate("postedBy","_id name")
+    .exec((err,result)=>{
+        if(err){
+            return res.status(422).json({error:err})
+        }else{
+            res.json(result)
+        }
     })
 })
 

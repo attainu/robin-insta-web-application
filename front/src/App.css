@@ -18,3 +18,23 @@ a{
     max-width: 380px;
     margin:10px auto;
 }
+.gallery{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .item{
+    width: 30%;
+  }
+  .home-card{
+    max-width: 500px;
+    height: max-content;
+    margin: 26px auto;
+  }
+
+  #toast-container{
+    top:30px !important;
+    right: 20px !important;
+    left: auto !important;
+  }
