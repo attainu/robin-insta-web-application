@@ -6,6 +6,18 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const {JWT_SECRET} = require('../key')
 const requireLogin = require('../middleware/requireLogin')
+// const nodemailer = require('nodemailer')
+// const sendgridTransport = require('nodemailer-sendgrid-transport')
+
+//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
+// 
+
+
+// const transporter = nodemailer.createTransport(sendgridTransport({
+//   auth:{
+//     api_key:"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"
+//   }
+// })) 
 
 
 // router.get('/protected',requireLogin, (req,res)=>{
@@ -35,6 +47,12 @@ router.post('/signup',(req,res)=>{
     
             user.save()
             .then(user=>{
+              // transporter.sendMail({
+              //   to:user.email,
+              //   from:"no-reply@instgram.com",
+              //   subject:"signup sucessful",
+              //   html:"<h1>Welcome to instagram</h1>"
+              // })
               
                 res.json({message:"successfully done"})
             })

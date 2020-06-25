@@ -9,9 +9,9 @@ const NavBar = () => {
     //if this condition is true this link will be return on profile and crreate post page
     if (state) {
       return [
-        <li><Link to="/profile">Profile</Link></li>,
-        <li><Link to="/create">Create Post</Link></li>,
-        <li>
+        <li key="2"><Link to="/profile">Profile</Link></li>,
+        <li key="3"><Link to="/create">Create Post</Link></li>,
+        <li key="5">
           <button className="btn #c62828 red darken-3"
         onClick={() =>{
           localStorage.clear()
@@ -28,8 +28,8 @@ const NavBar = () => {
       ///if this condition is not true this link will be return on signin and signup page
     } else {
       return [
-        <li><Link to="/signin">Signin</Link></li>,
-        <li><Link to="/signup">Signup</Link></li>
+        <li key="6"><Link to="/signin">Signin</Link></li>,
+        <li key="7"><Link to="/signup">Signup</Link></li>
 
       ]
     }

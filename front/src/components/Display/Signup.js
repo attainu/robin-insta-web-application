@@ -71,7 +71,7 @@ const SignIn = ()=>{
                     SignUP
                 </button>
                 <h5>
-                    <Link to="/signin">Have an account? </Link>
+                    <Link to="/signin"><h6>Have an account?</h6> </Link>
                 </h5>
                 
             </div>
@@ -79,3 +79,8 @@ const SignIn = ()=>{
     )
 }
 export default SignIn
+
+
+
+
+

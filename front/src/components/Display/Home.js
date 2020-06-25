@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { UserContext } from '../../App'
+import {Link} from 'react-router-dom'
 
 const Home = () => {
     const [data, setData] = useState([])
@@ -27,7 +28,7 @@ const Home = () => {
                 "Content-Type": "application/json",
                 "Authorization": "Bearer " + localStorage.getItem("jwt")
             },
-            body: JSON.stringify({
+            body:JSON.stringify({
                 postId: id
             })
         }).then(res => res.json())

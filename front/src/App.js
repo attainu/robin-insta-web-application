@@ -8,6 +8,7 @@ import Profile from './components/Display/Profile'
 import Signup from './components/Display/Signup'
 import CreatePost from './components/Display/CreatePost'
 import {reducer,initialState} from './reducers/userReducer'
+import UserProfile from './components/Display/Userprofile'
 
 // context API
 export const UserContext = createContext()
@@ -17,10 +18,10 @@ const Routing = () => {
   const {state,dispatch} = useContext(UserContext)
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"))
-    //console.log(typeof(user),user)
+    // console.log(typeof(user),user)
     if(user){
       dispatch({ type: "User", payload: user })
-      // history.push('/')
+      history.push('/')
     }else{
       history.push('./signin')
     }
@@ -42,11 +43,14 @@ const Routing = () => {
         <Signup />
 
       </Route>
-      <Route path="/Profile">
+      <Route exact path="/Profile">
         <Profile />
       </Route>
       <Route path="/create">
         <CreatePost />
+      </Route>
+      <Route path="/profile/:userid">
+        <UserProfile />
       </Route>
     </Switch>
   )
