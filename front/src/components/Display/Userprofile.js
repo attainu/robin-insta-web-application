@@ -58,7 +58,7 @@ const Profile = ()=>{
            }}>
                 <div>
                 <img style={{width:"160px",height:"160px",borderRadius:"80px"}}
-                    src="https://images.unsplash.com/photo-1590352555082-21b8b8a1169b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+                    src={userProfile.user.pic}
                     />
                 </div>
                 <div >
@@ -72,7 +72,7 @@ const Profile = ()=>{
                     <button className="btn waves-effect waves-light #64b5f6 blue darken-1"
                     onClick={()=>followUser()}
                     >
-                        Follow
+                        <h4>Follow</h4>
                 </button>
                 </div>
             </div>

@@ -9,6 +9,7 @@ import Signup from './components/Display/Signup'
 import CreatePost from './components/Display/CreatePost'
 import {reducer,initialState} from './reducers/userReducer'
 import UserProfile from './components/Display/Userprofile'
+import Reset from './components/Display/Reset'
 
 // context API
 export const UserContext = createContext()
@@ -23,6 +24,7 @@ const Routing = () => {
       dispatch({ type: "User", payload: user })
       history.push('/')
     }else{
+      if(!history.location.pathname.startsWith('/reset'))
       history.push('./signin')
     }
   },[])
@@ -51,6 +53,9 @@ const Routing = () => {
       </Route>
       <Route path="/profile/:userid">
         <UserProfile />
+      </Route>
+      <Route path="/reset">
+        <Reset />
       </Route>
     </Switch>
   )

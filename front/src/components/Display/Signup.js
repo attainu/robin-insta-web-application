@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import {Link,useHistory} from 'react-router-dom'
 import M from 'materialize-css' //this website help in frontend
 
@@ -8,7 +8,38 @@ const SignIn = ()=>{
     const [name,setName] = useState("")
     const [password,setPassword] = useState("")
     const [email,setEmail] = useState("")
-    const PostData =()=>{
+    const [image,setImage] = useState("")
+    const [url,setUrl] = useState(undefined)
+
+    useEffect(()=>{
+        if(url){
+            uploadFileds()
+        }
+
+    },[url])
+    
+
+    //making function of upload profile pic that will be completely optional field
+    const uploadPic = ()=>{
+        const data = new FormData  //in order to upload file we need to formdata
+        data.append("file",image)
+        data.append("upload_preset","instagram")
+        data.append("cloudinary_name","ds9gf8buk")
+        fetch("https://api.cloudinary.com/v1_1/ds9gf8buk/image/upload",{
+            method:"post",
+            body:data
+        })
+        .then(res=>res.json())
+        .then(data=>{
+            setUrl(data.url)
+        })
+        //error handling
+        .catch(err=>{
+            console.log(err)
+        })
+    }
+
+    const uploadFileds = ()=>{
         //email validation
         if(!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)){
             M.toast({html: "invalid email",classes:"#c62828 red darken-3"})
@@ -23,7 +54,7 @@ const SignIn = ()=>{
                 name,
                 password,
                 email,
-                //pic:url
+                pic:url
             })
         }).then(res=>res.json())
         .then(data=>{
@@ -34,11 +65,18 @@ const SignIn = ()=>{
                M.toast({html:data.message,classes:"#43a047 green darken-1"})
                history.push('/signin')
            }
-
-          //console.log(data)
         }).catch(err=>{
             console.log(err)
         })
+    }
+
+
+    const PostData =()=>{
+        if(image){
+            uploadPic()
+        }else{
+            uploadFileds()
+        }     
     }
 
     return (
@@ -65,6 +103,19 @@ const SignIn = ()=>{
                 value={password}
                 onChange={(e)=>setPassword(e.target.value)}
                 />
+                
+                <div className="file-field input-field">
+                <div className="btn #64b5f6 blue darken-1">
+                <span><h6>Upload Profile Picture</h6></span>
+                <input type="file" onChange={(e)=>setImage(e.target.files[0])} />
+
+                </div>
+                <div className="file-path-wrapper">
+                    <input  className="file-path validate" type="text" />
+
+                </div>
+
+            </div>
 
                 <button className="btn waves-effect waves-light #64b5f6 blue darken-1"
                 onClick={()=>PostData()}>
