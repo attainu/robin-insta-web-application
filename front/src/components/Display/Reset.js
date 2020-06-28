@@ -9,6 +9,7 @@ const Reset  = ()=>{
             M.toast({html: "invalid email",classes:"#c62828 red darken-3"})
             return
         }
+        //making request from server
         fetch('/reset-password',{
             method:"post",
             headers:{

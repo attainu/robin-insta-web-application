@@ -5,7 +5,7 @@ const User = mongoose.model("User")
 const crypto = require('crypto')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const {JWT_SECRET} = require('../key')
+const {JWT_SECRET} = require('../config/key')
 const requireLogin = require('../middleware/requireLogin')
 const nodemailer = require('nodemailer')
 const sendgridTransport = require('nodemailer-sendgrid-transport')
@@ -13,7 +13,7 @@ const sendgridTransport = require('nodemailer-sendgrid-transport')
 
 const transporter = nodemailer.createTransport(sendgridTransport({
   auth:{
-    api_key:"API_KEY"
+    api_key:"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"
   }
 })) 
 
@@ -45,12 +45,12 @@ router.post('/signup',(req,res)=>{
     
             user.save()
             .then(user=>{
-              // transporter.sendMail({
-              //   to:user.email,
-              //   from:"no-reply@instgram.com",
-              //   subject:"signup sucessful",
-              //   html:"<h1>Welcome to instagram</h1>"
-              // })
+              transporter.sendMail({
+                to:user.email,
+                from:"myinstagramv12@gmail.com",
+                subject:"signup sucessful",
+                html:"<h1>Welcome to instagram</h1><p>you have sucessfully signup on instagram</p>"
+              })
               
                 res.json({message:"successfully done"})
             })
@@ -96,7 +96,7 @@ router.post('/signin',(req,res)=>{
   })
 })
 
-//making router of reset passwaord
+//making router for reset passwaord
 
 router.post('/reset-password',(req,res)=>{
   crypto.randomBytes(32,(err,buffer)=>{
@@ -114,14 +114,12 @@ router.post('/reset-password',(req,res)=>{
           user.save().then((result)=>{
               transporter.sendMail({
                   to:user.email,
-                  from:"no-replay@instagram.com",
+                  from:"myinstagramv12@gmail.com",
                   subject:"password reset",
                   html:`
                   <p>You requested for password reset</p>
-                  <h5>click in this <a href="http://localhoast:3002/reset/${token}">link</a> to reset password</h5>
+                  <h5>click in this <a href="http://localhoast:3004/reset/${token}">link</a> to reset password</h5>
                   `
-              }).catch(err=>{
-                console.log(err)
               })
               res.json({message:"check your email"})
           })

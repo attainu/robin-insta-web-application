@@ -47,7 +47,7 @@ router.post('/createpost',requireLogin,(req,res)=>{
 //all the post created by that user
 router.get('/mypost',requireLogin,(req,res)=>{
     Post.find({postedBy:req.user._id}) //quering by id who is loggedin
-    .populate("PostedBy","_id name")
+    .populate("postedBy","_id name")
     .then(mypost=>{
         res.json({mypost})
     })
@@ -93,6 +93,9 @@ router.put('/unlike',requireLogin,(req,res)=>{
 //making route
 
 router.put('/comment',requireLogin,(req,res)=>{
+    if (!req.body.text) {
+        res.status(422).json({ error: 'Comment should not be empty'});
+    }
     const comment = {
         text:req.body.text,
         postedBy:req.user._id
@@ -102,8 +105,8 @@ router.put('/comment',requireLogin,(req,res)=>{
     },{
         new:true
     })
-    .populate("comments.postedBy","_id name")
     .populate("postedBy","_id name")
+    .populate("comments.postedBy","_id name")
     .exec((err,result)=>{
         if(err){
             return res.status(422).json({error:err})
