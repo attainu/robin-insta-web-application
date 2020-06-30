@@ -40,7 +40,7 @@ You can see here deploement link:
 
 * [Node.js](https://nodejs.org/en/docs/) - For the making API"s
 * [Express.js](https://expressjs.com/) - For Node js Framework
-* [MongoDB](https://www.mongodb.com/) - Used to generate RSS Feeds
+* [MongoDB](https://www.mongodb.com/) - We have Used MongoDB Atlas for the storing Data in Database
 * [React](https://reactjs.org/) - For the Frontend Design
 
 ## Authors
