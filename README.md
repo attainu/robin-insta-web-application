@@ -26,7 +26,7 @@ npm start
 And repeat same in front-end side
 
 ```
-npm install
+npm start
 ```
 
 End with an example of getting some data out of the system or using it for a little demo
